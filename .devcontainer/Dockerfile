@@ -67,7 +67,8 @@ ARG RUNTIME_PACKAGES="\
   libzbar0 \
   poppler-utils \
   htop \
-  sudo"
+  sudo \
+  software-properties-common"
 
 # Install basic runtime packages.
 # These change very infrequently
@@ -77,14 +78,15 @@ RUN set -eux \
     && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES}
 
 ARG PYTHON_PACKAGES="\
-  python3 \
-  python3-pip \
-  python3-wheel \
+  python3.12 \
+  python3.12-pip \
+  python3.12-wheel \
   pipenv \
   ca-certificates"
 
 RUN set -eux \
   echo "Installing python packages" \
+    && add-apt-repository ppa:deadsnakes/ppa \
     && apt-get update \
     && apt-get install --yes --quiet ${PYTHON_PACKAGES}
 
